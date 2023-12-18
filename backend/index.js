@@ -89,7 +89,7 @@ app.post('/studentregistration/:id', (req, res) => {
   db.query(q, [values], (err, data) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ error: "Error while adding student information" });
+      return res.json({ error: "Error while adding student information" });
     }
     return res.json({ message: "Student Registration information added successfully!" });
   });
