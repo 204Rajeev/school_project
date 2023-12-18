@@ -8,8 +8,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-
-
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -18,28 +16,27 @@ const db = mysql.createConnection({
 });
 
 
-// root of the application
 app.get("/", (req, res) => {
   res.json("Root of the Project_school")
 })
 
 
-app.post('/student_apf_1', (req, res) => {
+app.post('/studentidentity', (req, res) => {
   const q =
-    'INSERT INTO Student_apf_1 (NameAsPerTC, NameAsPerAadhaar, AadhaarNo, DOBAsPerTC, DOBAsPerAadhaar, Gender, MotherName, FatherName, GuardianName, AadhaarNoMother, AadhaarNoFather, StudentNameAsPerAadhar, PresentAddress, Pincode, MobileNumber, AlternateMobileNumber, EmailId) VALUES (?)'
+    'INSERT INTO Student_apf_1 (NameAsPerTC, NameAsPerAadhar, AadharNo, DOBAsPerTC, DOBAsPerAadhar, Gender, MotherName, FatherName, GuardianName, AadharNoMother, AadharNoFather, StudentNameAsPerAadhar, PresentAddress, Pincode, MobileNumber, AlternateMobileNumber, EmailId) VALUES (?)'
     
   const values = [
     req.body.NameAsPerTC,
-    req.body.NameAsPerAadhaar,
-    req.body.AadhaarNo,
+    req.body.NameAsPerAadhar,
+    req.body.AadharNo,
     req.body.DOBAsPerTC,
-    req.body.DOBAsPerAadhaar,
+    req.body.DOBAsPerAadhar,
     req.body.Gender,
     req.body.MotherName,
     req.body.FatherName,
     req.body.GuardianName,
-    req.body.AadhaarNoMother,
-    req.body.AadhaarNoFather,
+    req.body.AadharNoMother,
+    req.body.AadharNoFather,
     req.body.StudentNameAsPerAadhar,
     req.body.PresentAddress,
     req.body.Pincode,
@@ -50,12 +47,12 @@ app.post('/student_apf_1', (req, res) => {
 
   db.query(q, [values], (err, data) => {
         if(err) return res.json(err)
-        return res.json("new student enrolled !!")
+        return  res.json({ message: "New student enrolled!", studentId: data.insertId});
   });
 });
 
 
-app.post('/student_apf_2/:id', (req, res) => {
+app.post('/studentregistration/:id', (req, res) => {
   const StudentId= req.params.id;
   const q =
     'INSERT INTO student_apf_2 (StudentId, MotherTongue, SocialCategory, MinorityGroup, BPLBeneficiary, AAYBeneficiary, EWSDisadvantagedGroup, IsCWSN, CWSNImpairmentType, ChildIsIndianNational, ChildIsOutOfSchoolChild, MainstreamedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
