@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
 import { useAuth } from "../../AuthContext";
-import { AuthProvider } from "../../AuthContext";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import { useContext } from "react";

@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
 import { useAuth } from "../../AuthContext";
-import { AuthProvider } from "../../AuthContext";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import StudentContext from '../../StudentContext';
@@ -67,7 +66,7 @@ export default function StudentIdentity() {
       });
 
       const result = await response.json();
-      console.log("responsesee:",result.studentId);
+      console.log("responsesee:",result);
       const newStudentId = result.studentId;
       updateStudentId(newStudentId);
 
@@ -84,10 +83,10 @@ export default function StudentIdentity() {
       <Navbar />
       {phoneNumber ? (
         <div className="container mt-5 ms-5  mx-auto d-flex flex-column justify-content-center align-items-center ">
-          <h1 class="display-6">Application Flow : Step 1</h1>
+          <h1 className="display-6">Application Flow : Step 1</h1>
           <div className="d-flex flex-column justify-content-center gap-3 mt-4">
             <div className="flex-item">
-              <h2 class="h4">Student Information (As per TC)</h2>
+              <h2 className="h4">Student Information (As per TC)</h2>
             </div>
             <div className="flex-item">
               <form onSubmit={handleSubmit}>

@@ -10,9 +10,8 @@ import StudentProvider from './StudentProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    
     <AuthProvider>
-    <StudentProvider>
+      <StudentProvider>
     <App />
     </StudentProvider>
     </AuthProvider>

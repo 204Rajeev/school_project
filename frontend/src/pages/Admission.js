@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "../components/Navbar";
 import NewSection from "../components/NewSection";
 import ExamFlow from "../components/ExamFlow";
@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import { AuthProvider } from "../AuthContext";
 
 const Admission = () => {
-
   const { phoneNumber } = useAuth();
   const history = useHistory();
 
