@@ -18,6 +18,9 @@ DROP TABLE studentregistration;
 DELETE FROM studentidentity
 WHERE StudentId=1;
 
+SELECT studentidentity studentregistration PrevSchoolInfo UploadDoc SubmitForm
+FROM authprogress
+WHERE StudentId=(?);
 
 CREATE TABLE authprogress (
     MobileNumber VARCHAR(15) NOT NULL,
