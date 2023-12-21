@@ -24,43 +24,36 @@ app.get("/", (req, res) => {
 
 
 app.post("/authprogress", (req, res) => {
-  const q='INSERT INTO authprogress (MobileNumber) VALUES (?)'
+  const mobileNumber = req.body.MobileNumber;
 
-  const values =[req.body.MobileNumber]
+  const checkMobileNumberQuery = 'SELECT StudentId FROM authprogress WHERE MobileNumber = ?';
+  db.query(checkMobileNumberQuery, [mobileNumber], (err, data) => {
+      if (err) {
+          return res.json(err);
+      }
 
-  db.query(q, [values], (err, data) => {
-    if(err) return res.json(err)
-    return  res.json({ message: "New student enrolled!", studentId: data.insertId});
+      if (data.length > 0) {
+          const existingStudentId = data[0].StudentId;
+          return res.json({ message: 'Mobile number already exists.', studentId: existingStudentId });
+      }
+
+      const q = 'INSERT INTO authprogress (MobileNumber) VALUES (?)';
+      const values = [mobileNumber];
+
+      db.query(q, [values], (err, data) => {
+          if (err) {
+              return res.json(err);
+          }
+
+          return res.json({
+              message: "New student enrolled!",
+              studentId: data.insertId
+          });
+      });
   });
-})
+});
 
-app.put("/authprogress/studentidentity/:id", (req, res) => {
-  const StudentId = req.params.id;
-  const q = 'UPDATE authprogress SET studentidentity = TRUE WHERE StudentId = (?)'
 
-  const values = [
-    StudentId
-  ];
-
-  db.query(q, [values], (err, data) => {
-    if (err) return res.send(err);
-    return res.json(data);
-  })
-})
-
-app.put("/authprogress/studentregistration/:id", (req, res) => {
-  const StudentId = req.params.id;
-  const q = 'UPDATE authprogress SET studentregistration = TRUE WHERE StudentId = (?)'
-
-  const values = [
-    StudentId
-  ];
-
-  db.query(q, [values], (err, data) => {
-    if (err) return res.send(err);
-    return res.json(data);
-  })
-})
 
 app.put("/authprogress/PrevSchoolInfo/:id", (req, res) => {
   const StudentId = req.params.id;
@@ -158,7 +151,17 @@ app.post('/studentidentity/:id', (req, res) => {
 
   db.query(q, [values], (err, data) => {
         if(err) return res.json(err)
-        return  res.json({ message: "New student Identity Information added !"});
+        
+        const q = 'UPDATE authprogress SET studentidentity = TRUE WHERE StudentId = (?)'
+
+        const values = [
+          StudentId
+        ];
+
+        db.query(q, [values], (err, data) => {
+          if (err) return res.send(err);
+          return res.json(data);
+        })
   });
 });
 
@@ -188,7 +191,16 @@ app.post('/studentregistration/:id', (req, res) => {
       console.error(err);
       return res.json({ error: "Error while adding student information" });
     }
-    return res.json({ message: "Student Registration information added successfully!" });
+      const q = 'UPDATE authprogress SET studentregistration = TRUE WHERE StudentId = (?)'
+
+      const values = [
+        StudentId
+      ];
+
+      db.query(q, [values], (err, data) => {
+        if (err) return res.send(err);
+        return res.json(data);
+      })
   });
 });
 
@@ -197,13 +209,3 @@ app.post('/studentregistration/:id', (req, res) => {
 app.listen(process.env.PORT,()=>{
     console.log("connected to server")
 })
-
-
-
-
-
-
-
-
-
-
