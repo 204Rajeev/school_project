@@ -1,8 +1,11 @@
 CREATE DATABASE school;
 USE school;
 
+ALTER TABLE authprogress AUTO_INCREMENT = 1;
+
+
 DELETE FROM studentregistration
-WHERE StudentId=1;
+WHERE StudentId=4;
 
 SELECT *
 FROM authprogress;
@@ -15,12 +18,9 @@ FROM studentregistration;
 
 DROP TABLE studentregistration;
 
-DELETE FROM studentidentity
-WHERE StudentId=1;
+DELETE FROM studentregistration
+WHERE StudentId=3;
 
-SELECT studentidentity studentregistration PrevSchoolInfo UploadDoc SubmitForm
-FROM authprogress
-WHERE StudentId=(?);
 
 CREATE TABLE authprogress (
     MobileNumber VARCHAR(15) NOT NULL,
