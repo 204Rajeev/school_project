@@ -6,6 +6,7 @@ import ApplicationFlow from "../components/ApplicationFlow";
 import { useAuth } from "../AuthContext";
 import { useHistory } from "react-router-dom";
 import { AuthProvider } from "../AuthContext";
+import Footer from "../components/Footer";
 
 const Admission = () => {
   const { phoneNumber } = useAuth();
@@ -19,7 +20,7 @@ const Admission = () => {
     <>
       <Navbar />
       {phoneNumber ? (
-        <div className="container mt-5">
+        <div className="container mt-5 mb-5">
           <h2 className="text-center mb-4">Dashboard</h2>
           <div className="d-flex flex-wrap justify-content-center">
             <div className="item mb-4 col-lg-4 col-sm-12 col-md-6">
@@ -42,6 +43,7 @@ const Admission = () => {
       ) : (
         redirectToHome()
       )}
+      <Footer/>
     </>
   );
 };

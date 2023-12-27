@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <StudentProvider>
-    <App />
+      <App />
     </StudentProvider>
     </AuthProvider>
   </React.StrictMode>

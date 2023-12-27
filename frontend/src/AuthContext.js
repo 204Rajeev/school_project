@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     setPhoneNumber(phone);
   };
   const logout = () => {
-    // Add any additional logout logic here
+    localStorage.removeItem('studentId');
     setPhoneNumber(null);
   };
   return (
