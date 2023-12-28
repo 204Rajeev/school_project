@@ -78,3 +78,15 @@ CREATE TABLE studentregistration(
 	PRIMARY KEY(StudentId),
     FOREIGN KEY (StudentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
 );
+
+CREATE TABLE documents(
+    DocumentId INT,
+    TransferCertificate LONGBLOB,
+    Results LONGBLOB,
+    AdharCard LONGBLOB,
+    PassportPhoto LONGBLOB,
+    Signature LONGBLOB,
+    Affidavit LONGBLOB,
+    PRIMARY KEY(DocumentId),
+    FOREIGN KEY (DocumentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
+);

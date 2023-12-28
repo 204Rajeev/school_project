@@ -6,6 +6,7 @@ import studentRegistrationRouter from './routes/studentregistration.js';
 import authProgressRouter from './routes/authprogress.js';
 
 
+
 dotenv.config();
 const app = express()
 app.use(express.json())

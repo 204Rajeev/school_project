@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../database/my_sql.js'; // Adjust the path as needed
+import db from '../database/my_sql.js';
 
 const router = express.Router();
 
