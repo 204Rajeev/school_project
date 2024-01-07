@@ -6,17 +6,13 @@ const router = express.Router();
 router.post('/:id', (req, res) => {
     const StudentId = req.params.id;
     const q =
-        'INSERT INTO studentidentity (StudentId, NameAsPerTC, NameAsPerAadhar, AadharNo, DOBAsPerTC, DOBAsPerAadhar, Gender, MotherName, FatherName, GuardianName, AadharNoMother, AadharNoFather, StudentNameAsPerAadhar, PresentAddress, Pincode, MobileNumber, AlternateMobileNumber, EmailId) VALUES (?)';
+        'INSERT INTO studentidentity (StudentId, NameAsPerAadhar, AadharNo, DOBAsPerAadhar, Gender, GuardianName, AadharNoMother, AadharNoFather, StudentNameAsPerAadhar, PresentAddress, Pincode, MobileNumber, AlternateMobileNumber, EmailId) VALUES (?)';
     const values = [
         StudentId,
-        req.body.NameAsPerTC,
         req.body.NameAsPerAadhar,
         req.body.AadharNo,
-        req.body.DOBAsPerTC,
         req.body.DOBAsPerAadhar,
         req.body.Gender,
-        req.body.MotherName,
-        req.body.FatherName,
         req.body.GuardianName,
         req.body.AadharNoMother,
         req.body.AadharNoFather,

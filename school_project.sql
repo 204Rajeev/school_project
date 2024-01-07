@@ -1,8 +1,8 @@
 CREATE DATABASE school;
 USE school;
 
-ALTER TABLE authprogress AUTO_INCREMENT = 1;
 
+ALTER TABLE authprogress AUTO_INCREMENT = 1;
 
 DELETE FROM studentregistration
 WHERE StudentId=4;
@@ -16,6 +16,9 @@ FROM studentidentity;
 SELECT *
 FROM studentregistration;
 
+SELECT *
+FROM previousschool;
+
 DROP TABLE studentregistration;
 
 DELETE FROM studentregistration
@@ -27,23 +30,19 @@ CREATE TABLE authprogress (
     StudentId INT AUTO_INCREMENT,
     studentidentity BOOLEAN DEFAULT false,
     studentregistration BOOLEAN DEFAULT false,
-    PrevSchoolInfo BOOLEAN DEFAULT false,
-    UploadDoc BOOLEAN DEFAULT false,
-    SubmitForm BOOLEAN DEFAULT false,
+    previousschool BOOLEAN DEFAULT false,
+    documents BOOLEAN DEFAULT false,
+    submitform BOOLEAN DEFAULT false,
     PRIMARY KEY (MobileNumber),
-    UNIQUE KEY (StudentId)
+    UNIQUE KEY (StudentId)
 );
 
 CREATE TABLE studentidentity (
     StudentId INT,
-    NameAsPerTC VARCHAR(255),
     NameAsPerAadhar VARCHAR(255) NOT NULL,
     AadharNo VARCHAR(12) UNIQUE NOT NULL,
-    DOBAsPerTC DATE,  /*YYYY-MM-DD*/
     DOBAsPerAadhar DATE NOT NULL,
     Gender ENUM('male', 'female', 'transgender', 'others') NOT NULL,
-    MotherName VARCHAR(255),
-    FatherName VARCHAR(255),
     GuardianName VARCHAR(255),
     AadharNoMother VARCHAR(12) UNIQUE NOT NULL,
     AadharNoFather VARCHAR(12) UNIQUE NOT NULL,
@@ -53,8 +52,6 @@ CREATE TABLE studentidentity (
     MobileNumber VARCHAR(15) NOT NULL,
     AlternateMobileNumber VARCHAR(15),
     EmailId VARCHAR(255),
-    AtLeastOneNotNull CHAR(255) GENERATED ALWAYS AS (COALESCE(MotherName, FatherName, GuardianName)) STORED,
-    CHECK (AtLeastOneNotNull IS NOT NULL),
     AtLeastOneAadharNotNull VARCHAR(12) GENERATED ALWAYS AS (COALESCE(AadharNoMother, AadharNoFather)) STORED,
     CHECK (AtLeastOneAadharNotNull IS NOT NULL),
     PRIMARY KEY(studentId),
@@ -75,7 +72,23 @@ CREATE TABLE studentregistration(
     ChildIsIndianNational ENUM('yes', 'no'),
     ChildIsOutOfSchoolChild ENUM('yes', 'no'),
     MainstreamedDate DATE,
+    Disability ENUM('None', 'Blindness', 'Hearing Impairment', 'Multiple Disabilities including Deaf-blindness',
+                'Low-vision', 'Leprosy Cured Persons', 'Locomotor Disability', 'Dwarfism',
+                'Intellectual Disability', 'Mental Illness', 'Autism Spectrum Disorder', 'Cerebral Palsy',
+                'Muscular Dystrophy', 'Chronic Neurological Conditions', 'Specific Learning Disabilities',
+                'Multiple Sclerosis', 'Speech and Language Disability', 'Thalassemia', 'Hemophilia',
+                'Sickle Cell Disease', 'Acid Attack Victims', 'Parkinsons disease'),
 	PRIMARY KEY(StudentId),
+    FOREIGN KEY (StudentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
+);
+
+CREATE TABLE previousschool(
+	StudentId INT,
+    FatherName VARCHAR(255),
+    MotherName VARCHAR(255),
+    DOBAsPerTC DATE,  /*YYYY-MM-DD*/
+    NameAsPerTC VARCHAR(255),
+    PRIMARY KEY(StudentId),
     FOREIGN KEY (StudentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
 );
 

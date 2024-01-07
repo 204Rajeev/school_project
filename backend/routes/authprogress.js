@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 
 router.get("/status/:id", (req, res) => {
     const StudentId = req.params.id;
-    const q='SELECT studentidentity, studentregistration, PrevSchoolInfo, UploadDoc, SubmitForm FROM authprogress WHERE StudentId=(?)'
+    const q='SELECT studentidentity, studentregistration, previousschool, documents, submitform FROM authprogress WHERE StudentId=(?)'
     const values = [StudentId]
     db.query(q,[values],(err,data)=>{
         if(err) return res.json(err)

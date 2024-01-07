@@ -1,5 +1,4 @@
 import express from 'express';
-
 import db from '../database/my_sql.js';
 
 
@@ -25,7 +24,6 @@ router.post('/:id', (req, res) => {
 
         res.send('File Uploaded Successfully');
     })
+})
 
-
-
-});
+export default router;

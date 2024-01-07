@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/:id', (req, res) => {
     const StudentId = req.params.id;
     const q =
-        'INSERT INTO studentregistration (StudentId, MotherTongue, SocialCategory, MinorityGroup, BPLBeneficiary, AAYBeneficiary, EWSDisadvantagedGroup, IsCWSN, CWSNImpairmentType, ChildIsIndianNational, ChildIsOutOfSchoolChild, MainstreamedDate) VALUES (?)';
+        'INSERT INTO studentregistration (StudentId, MotherTongue, SocialCategory, MinorityGroup, BPLBeneficiary, AAYBeneficiary, EWSDisadvantagedGroup, IsCWSN, CWSNImpairmentType, ChildIsIndianNational, ChildIsOutOfSchoolChild, MainstreamedDate,Disability) VALUES (?)';
 
     const values = [
         StudentId,
@@ -20,7 +20,8 @@ router.post('/:id', (req, res) => {
         req.body.CWSNImpairmentType,
         req.body.ChildIsIndianNational,
         req.body.ChildIsOutOfSchoolChild,
-        req.body.MainstreamedDate
+        req.body.MainstreamedDate,
+        req.body.Disability,
     ];
 
     db.query(q, [values], (err, data) => {
