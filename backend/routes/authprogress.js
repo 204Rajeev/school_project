@@ -1,50 +1,74 @@
-import express from 'express';
-import db from '../database/my_sql.js'; 
+import express from "express";
+import db from "../database/my_sql.js";
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
-    const mobileNumber = req.body.MobileNumber;
+router.post("/", (req, res) => {
+  try {
+    const { phoneNumber } = req.body;
+    console.log(req.body);
 
-    const checkMobileNumberQuery = 'SELECT StudentId FROM authprogress WHERE MobileNumber = ?';
-    db.query(checkMobileNumberQuery, [mobileNumber], (err, data) => {
-        if (err) {
-            return res.json(err);
-            //console.log("error1");
-        }
+    if (!phoneNumber) {
+      return res.status(400).json({ error: "phoneNumber is required" });
+    }
 
-        if (data.length > 0) {
-            const existingStudentId = data[0].StudentId;
-            return res.json({ message: 'Mobile number already exists.', studentId: existingStudentId });
-        }
+    const checkQuery = "SELECT * FROM authprogress WHERE MobileNumber = ?";
 
-        const insertQuery = 'INSERT INTO authprogress (MobileNumber) VALUES (?)';
-        const values = [mobileNumber];
+    db.query(checkQuery, [phoneNumber], (checkErr, checkResult) => {
+      if (checkErr) {
+        console.error(checkErr);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
 
-        db.query(insertQuery, [values], (insertErr, insertData) => {
-            if (insertErr) {
-                return res.json(insertErr);
-                //console.log("error");
-            }
-
-            return res.json({
-                message: "New student enrolled!",
-                studentId: insertData.insertId
-            });
+      if (checkResult.length > 0) {
+        // If phoneNumber exists, return the existing studentId
+        return res.json({
+          message: "Student already enrolled!",
+          studentId: checkResult[0].StudentId,
         });
+      } else {
+        // If phoneNumber doesn't exist, insert a new record
+        const insertQuery =
+          "INSERT INTO authprogress (MobileNumber) VALUES (?)";
+
+        db.query(insertQuery, [phoneNumber], (insertErr, insertResult) => {
+          if (insertErr) {
+            console.error(insertErr);
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
+
+          // Return the newly inserted studentId
+          return res.json({
+            message: "New student enrolled!",
+            studentId: insertResult.insertId,
+          });
+        });
+      }
     });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-router.get("/status/:id", (req, res) => {
-    const StudentId = req.params.id;
-    const q='SELECT studentidentity, studentregistration, previousschool, documents, submitform FROM authprogress WHERE StudentId=(?)'
-    const values = [StudentId]
-    db.query(q,[values],(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
-    })
-  })
+router.get("/status/:studentId", (req, res) => {
+  const studentId = req.params.studentId;
 
+  const query = "SELECT * FROM authprogress WHERE studentId = ?";
+  db.query(query, [studentId], (err, result) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      // Assuming result is an array with a single object
+      if (result.length === 1) {
+        const { StudentId, MobileNumber, ...dataWithoutStudentId } = result[0];
+        res.json(dataWithoutStudentId);
+      } else {
+        res.status(404).json({ error: "Student not found" });
+      }
+    }
+  });
+});
 
-
-export default router;
+export default router;

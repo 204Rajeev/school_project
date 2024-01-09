@@ -1,7 +1,6 @@
 CREATE DATABASE school;
 USE school;
 
-DROP TABLE studentidentity;
 
 ALTER TABLE authprogress AUTO_INCREMENT = 1;
 
@@ -49,14 +48,13 @@ CREATE TABLE studentidentity (
     GuardianName VARCHAR(255),
     AadharNoMother VARCHAR(12) UNIQUE NOT NULL,
     AadharNoFather VARCHAR(12) UNIQUE NOT NULL,
-    StudentNameAsPerAadhar VARCHAR(255) NOT NULL,
     PresentAddress TEXT,
     Pincode VARCHAR(10),
     MobileNumber VARCHAR(15) NOT NULL,
     AlternateMobileNumber VARCHAR(15),
     EmailId VARCHAR(255),
-    CHECK (FatherName IS NOT NULL OR MotherName IS NOT NULL OR GuardianName IS NOT NULL),
-    CHECK ((AadharNoMother IS NOT NULL OR AadharNoFather IS NOT NULL)),
+    -- CHECK (FatherName IS NOT NULL OR MotherName IS NOT NULL OR GuardianName IS NOT NULL),
+    -- CHECK ((AadharNoMother IS NOT NULL OR AadharNoFather IS NOT NULL)),
     PRIMARY KEY(studentId),
     FOREIGN KEY (StudentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
 );

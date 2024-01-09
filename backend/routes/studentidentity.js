@@ -6,39 +6,41 @@ const router = express.Router();
 router.post('/:id', (req, res) => {
     const StudentId = req.params.id;
     const q =
-        'INSERT INTO studentidentity (StudentId, NameAsPerAadhar, AadharNo, DOBAsPerAadhar, Gender,FatherName, MotherName, GuardianName, AadharNoMother, AadharNoFather, StudentNameAsPerAadhar, PresentAddress, Pincode, MobileNumber, AlternateMobileNumber, EmailId) VALUES (?)';
+        "INSERT INTO studentidentity (StudentId, NameAsPerAadhar, AadharNo, DOBAsPerAadhar, Gender, MotherName, FatherName, GuardianName, AadharNoMother, AadharNoFather, PresentAddress, Pincode, MobileNumber, AlternateMobileNumber, EmailId) VALUES (?)";
     const values = [
         StudentId,
         req.body.NameAsPerAadhar,
         req.body.AadharNo,
         req.body.DOBAsPerAadhar,
         req.body.Gender,
-        req.body.FatherName,
         req.body.MotherName,
+        req.body.FatherName,
         req.body.GuardianName,
         req.body.AadharNoMother,
         req.body.AadharNoFather,
-        req.body.StudentNameAsPerAadhar,
         req.body.PresentAddress,
         req.body.Pincode,
         req.body.MobileNumber,
         req.body.AlternateMobileNumber,
-        req.body.EmailId
+        req.body.EmailId,
     ];
 
     db.query(q, [values], (err, data) => {
-        if (err) return res.json(err);
+        if (err) return res.json(err)
 
-        const updateQuery = 'UPDATE authprogress SET studentidentity = TRUE WHERE StudentId = ?';
-        const updateValues = [StudentId];
+        const q = 'UPDATE authprogress SET studentidentity = TRUE WHERE StudentId = (?)'
 
-        db.query(updateQuery, [updateValues], (updateErr, updateData) => {
-            if (updateErr) return res.json(updateErr);
+        const values = [
+            StudentId
+        ];
+
+        db.query(q, [values], (err, data) => {
+            if (err) return res.send(err);
             return res.json({
                 message: 'New student Identity Information added and authprogress updated!',
                 studentId: StudentId
             });
-        });
+        })
     });
 });
 

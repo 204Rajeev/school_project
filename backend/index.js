@@ -5,6 +5,7 @@ import studentIdentityRouter from './routes/studentidentity.js';
 import studentRegistrationRouter from './routes/studentregistration.js';
 import authProgressRouter from './routes/authprogress.js';
 import previousschoolRouter from './routes/previousschool.js';
+import documentedRouter from './routes/submitdocuments.js';
 
 
 
@@ -18,6 +19,7 @@ app.use('/authprogress', authProgressRouter);
 app.use('/studentidentity', studentIdentityRouter);
 app.use('/studentregistration', studentRegistrationRouter);
 app.use('/previousschool', previousschoolRouter);
+app.use('/submitdocuments',documentedRouter);
 
 
 
