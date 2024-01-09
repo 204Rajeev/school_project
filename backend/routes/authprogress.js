@@ -10,6 +10,7 @@ router.post('/', (req, res) => {
     db.query(checkMobileNumberQuery, [mobileNumber], (err, data) => {
         if (err) {
             return res.json(err);
+            //console.log("error1");
         }
 
         if (data.length > 0) {
@@ -23,6 +24,7 @@ router.post('/', (req, res) => {
         db.query(insertQuery, [values], (insertErr, insertData) => {
             if (insertErr) {
                 return res.json(insertErr);
+                //console.log("error");
             }
 
             return res.json({
