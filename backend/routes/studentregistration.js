@@ -5,8 +5,24 @@ const router = express.Router();
 
 router.post('/:id', (req, res) => {
     const StudentId = req.params.id;
-    const q =
-        'INSERT INTO studentregistration (StudentId, MotherTongue, SocialCategory, MinorityGroup, BPLBeneficiary, AAYBeneficiary, EWSDisadvantagedGroup, IsCWSN, CWSNImpairmentType, ChildIsIndianNational, ChildIsOutOfSchoolChild, MainstreamedDate,Disability) VALUES (?)';
+    const q = `
+    INSERT INTO studentregistration 
+      (StudentId, MotherTongue, SocialCategory, MinorityGroup, BPLBeneficiary, AAYBeneficiary, EWSDisadvantagedGroup, IsCWSN, CWSNImpairmentType, ChildIsIndianNational, ChildIsOutOfSchoolChild, MainstreamedDate, Disability) 
+    VALUES (?) 
+    ON DUPLICATE KEY UPDATE 
+      MotherTongue = VALUES(MotherTongue),
+      SocialCategory = VALUES(SocialCategory),
+      MinorityGroup = VALUES(MinorityGroup),
+      BPLBeneficiary = VALUES(BPLBeneficiary),
+      AAYBeneficiary = VALUES(AAYBeneficiary),
+      EWSDisadvantagedGroup = VALUES(EWSDisadvantagedGroup),
+      IsCWSN = VALUES(IsCWSN),
+      CWSNImpairmentType = VALUES(CWSNImpairmentType),
+      ChildIsIndianNational = VALUES(ChildIsIndianNational),
+      ChildIsOutOfSchoolChild = VALUES(ChildIsOutOfSchoolChild),
+      MainstreamedDate = VALUES(MainstreamedDate),
+      Disability = VALUES(Disability);
+  `;
 
     const values = [
         StudentId,
@@ -36,7 +52,7 @@ router.post('/:id', (req, res) => {
         db.query(updateQuery, [updateValues], (updateErr, updateData) => {
             if (updateErr) return res.json(updateErr);
             return res.json({
-                message: 'New student Registration Information added and authprogress updated!',
+                message: 'New student Registration Information added/updated and authprogress updated!',
                 studentId: StudentId
             });
         });

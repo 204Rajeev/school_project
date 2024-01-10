@@ -6,7 +6,6 @@ const router = express.Router();
 router.post("/", (req, res) => {
   try {
     const { phoneNumber } = req.body;
-    console.log(req.body);
 
     if (!phoneNumber) {
       return res.status(400).json({ error: "phoneNumber is required" });
@@ -71,4 +70,4 @@ router.get("/status/:studentId", (req, res) => {
   });
 });
 
-export default router;
+export default router;

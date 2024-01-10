@@ -1,6 +1,11 @@
 CREATE DATABASE school;
 USE school;
 
+drop table authprogress;
+drop table studentidentity;
+drop table studentregistration;
+drop table previousschool;
+drop table documents;
 
 ALTER TABLE authprogress AUTO_INCREMENT = 1;
 

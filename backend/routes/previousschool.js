@@ -5,8 +5,16 @@ const router = express.Router();
 
 router.post('/:id', (req, res) => {
     const StudentId = req.params.id;
-    const q =
-        'INSERT INTO previousschool (StudentId, FatherName, MotherName, DOBAsPerTC, NameAsPerTC) VALUES (?)';
+    const q = `
+  INSERT INTO previousschool 
+    (StudentId, FatherName, MotherName, DOBAsPerTC, NameAsPerTC) 
+  VALUES (?) 
+  ON DUPLICATE KEY UPDATE 
+    FatherName = VALUES(FatherName),
+    MotherName = VALUES(MotherName),
+    DOBAsPerTC = VALUES(DOBAsPerTC),
+    NameAsPerTC = VALUES(NameAsPerTC);
+`;
     const values = [
         StudentId,
         req.body.FatherName,
@@ -24,7 +32,7 @@ router.post('/:id', (req, res) => {
         db.query(updateQuery, [updateValues], (updateErr, updateData) => {
             if (updateErr) return res.json(updateErr);
             return res.json({
-                message: 'New student Previous School Information added and authprogress updated!',
+                message: 'New student Previous School Information added/updated and authprogress updated!',
                 studentId: StudentId
             });
         });
@@ -33,3 +41,4 @@ router.post('/:id', (req, res) => {
 
 
 export default router;
+
