@@ -42,10 +42,9 @@ export default function StudentIdentity() {
     MotherName: null,
     Gender: null,
     DOBAsPerAadhar: null,
-    DOBAsPerTC: null,
     AadharNo: null,
     NameAsPerAadhar: null,
-    NameAsPerTC: null,
+    TypeAdmission: null,
   });
 
   const handleInputChange = (e) => {
@@ -98,40 +97,25 @@ export default function StudentIdentity() {
             <h1 className="display-6">Application Flow : Step 1</h1>
             <div className="d-flex flex-column justify-content-center gap-3 mt-4">
               <div className="flex-item">
-                <h2 className="h4">Student Information (As per TC)</h2>
+                <h2 className="h4">Student Information</h2>
               </div>
               <div className="flex-item">
                 <form onSubmit={handleSubmit}>
-                  <div className="form-row">
-                    <div className="form-group  col-auto mb-3">
-                      <label htmlFor="NameAsPerTC">
-                        Name os Student (As per TC):
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control form-control-sm"
-                        id="NameAsPerTC"
-                        placeholder=""
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                    <div className="form-group col-auto col-auto mb-3">
-                      <label htmlFor="NameAsPerAadhar">
-                        Name of Student (As per Aadhaar):
-                        <span className="text-danger ms-2 fs-5 mb-0 mb-0">
-                          *
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control form-control-sm"
-                        id="NameAsPerAadhar"
-                        placeholder=""
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
+                  <div className="form-group col-auto col-auto mb-3">
+                    <label htmlFor="NameAsPerAadhar">
+                      Name of Student (As per Aadhaar):
+                      <span className="text-danger ms-2 fs-5 mb-0 mb-0">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control form-control-sm"
+                      id="NameAsPerAadhar"
+                      placeholder=""
+                      onChange={handleInputChange}
+                      required
+                    />
                   </div>
+
                   <div className="form-group col-auto mb-3">
                     <label htmlFor="AadharNo">
                       Aadhar No of Student:
@@ -146,18 +130,7 @@ export default function StudentIdentity() {
                       required
                     />
                   </div>
-                  <div className="form-group col-auto mb-3">
-                    <label htmlFor="DOBAsPerTC">
-                      Date of Birth (As per TC):
-                    </label>
-                    <input
-                      type="date"
-                      className="form-control form-control-sm"
-                      id="DOBAsPerTC"
-                      placeholder=""
-                      onChange={handleInputChange}
-                    />
-                  </div>
+
                   <div className="form-group col-auto mb-3">
                     <label htmlFor="DOBAsPerAadhar">
                       Date of Birth (As per Aadhaar):
@@ -184,7 +157,9 @@ export default function StudentIdentity() {
                         onChange={handleInputChange}
                         required
                       >
-                        <option value="" disabled selected>Select your gender</option>
+                        <option value="" disabled selected>
+                          Select your gender
+                        </option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="transgender">Transgender</option>
@@ -253,18 +228,26 @@ export default function StudentIdentity() {
                     />
                   </div>
                   <div className="form-group col-auto mb-3">
-                    <label htmlFor="StudentNameAsPerAadhar">
-                      STUDENT NAME AS PER AADHAR:
+                    <label htmlFor="TypeAdmission">
+                      Type of Admission:
                       <span className="text-danger ms-2 fs-5 mb-0 mb-0">*</span>
                     </label>
-                    <input
-                      type="text"
-                      className="form-control form-control-sm"
-                      id="StudentNameAsPerAadhar"
-                      placeholder=""
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <div className="col-sm-8">
+                      <select
+                        className="form-select"
+                        id="TypeAdmission"
+                        onChange={handleInputChange}
+                        required
+                      >
+                        <option value="" disabled selected>
+                          Select your type of Admission
+                        </option>
+                        <option value="1">Reappear in Class 9</option>
+                        <option value="2">
+                          Student comes from Other Recognised School
+                        </option>
+                      </select>
+                    </div>
                   </div>
                   <div className="form-group col-auto mb-3">
                     <label htmlFor="PresentAddress">PRESENT ADDRESS:</label>

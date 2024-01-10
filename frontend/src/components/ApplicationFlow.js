@@ -33,6 +33,29 @@ export default function ApplicationFlow() {
       history.push("/studentregistration");
     }
   };
+  const handleButtonClickSchoolPreviousInfo = () => {
+    if (isStepCompleted("previousschool")) {
+      // Show the modal
+      updatestep("previousschool");
+      setShowModal(true);
+    } else {
+      // Redirect to /studentidentity
+
+      history.push("/previousschool");
+    }
+  };
+
+  const handleButtondocuments = () => {
+    if (isStepCompleted("documents")) {
+      // Show the modal
+      updatestep("documents");
+      setShowModal(true);
+    } else {
+      // Redirect to /studentidentity
+
+      history.push("/documents");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +64,6 @@ export default function ApplicationFlow() {
           `http://localhost:8800/authprogress/status/${studentId}`
         );
         const data = await response.json();
-        console.log("data", data);
         setCompletedSteps(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -111,11 +133,11 @@ export default function ApplicationFlow() {
                 type="button"
                 className="btn btn-link p-0 mb-1 text-nowrap"
                 style={{ textDecoration: "none" }}
-                onClick={handleButtonClickStudentRegistration}
+                onClick={handleButtonClickSchoolPreviousInfo}
               >
                 Previous School Info
               </button>
-              {isStepCompleted("PrevSchoolInfo") ? (
+              {isStepCompleted("previousschool") ? (
                 <TiTick className="mb-1" size={20} style={{ color: "green" }} />
               ) : null}
             </li>
@@ -128,11 +150,11 @@ export default function ApplicationFlow() {
                 type="button"
                 className="btn btn-link p-0 mb-1 text-nowrap"
                 style={{ textDecoration: "none" }}
-                onClick={handleButtonClickStudentRegistration}
+                onClick={handleButtondocuments}
               >
                 Upload Documents
               </button>
-              {isStepCompleted("UploadDoc") ? (
+              {isStepCompleted("documents") ? (
                 <TiTick className="mb-1" size={20} style={{ color: "green" }} />
               ) : null}
             </li>
@@ -149,7 +171,7 @@ export default function ApplicationFlow() {
               >
                 Submit Application
               </button>
-              {isStepCompleted("SubmitForm") ? (
+              {isStepCompleted("submitform") ? (
                 <TiTick className="mb-1" size={20} style={{ color: "green" }} />
               ) : null}
             </li>

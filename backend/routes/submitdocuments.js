@@ -6,7 +6,7 @@ const router = express.Router();
 
 const upload = multer();
 
-router.post('/submitdocuments/:studentId', upload.fields([
+router.post('/:studentId', upload.fields([
     { name: 'aadharCard', maxCount: 1 },
     { name: 'transferCertificate', maxCount: 1 },
     { name: 'results', maxCount: 1 },
@@ -28,21 +28,44 @@ router.post('/submitdocuments/:studentId', upload.fields([
         };
     });
 
-    
+    // Build dynamic placeholders for the SQL query
     const placeholders = files.map(() => '?').join(', ');
 
-    // Wrap the SQL query in backticks, and ensure to use placeholders for dynamic values
-    const query = `INSERT INTO documents (documentId, ${files.join(', ')}) VALUES (?, ${placeholders})`;
-    const queryParams = [studentId];
+    // Check if document already exists
+    const checkQuery = 'SELECT * FROM documents WHERE StudentId = ?';
+    const checkResult = db.query(checkQuery, [studentId]);
 
-    // Append file data to query parameters
+    let query;
+    let queryParams;
+
+    if (checkResult.length > 0) {
+        // Document exists, construct update query
+        query = `UPDATE documents SET ${files.map((field) => `${field} = ?`).join(', ')} WHERE StudentId = ?`;
+    } else {
+        // Document doesn't exist, construct insert query
+        query = `INSERT INTO documents (documentId, ${files.join(', ')}) VALUES (?, ${placeholders})`;
+    }
+
+    queryParams = [studentId];
     files.forEach((field) => {
         queryParams.push(fileData[field].data, fileData[field].type);
     });
 
     try {
-        await db.query(query, queryParams); // Use 'await' here to make it asynchronous
-        res.json({ message: 'Files uploaded successfully' });
+        db.query(query, queryParams);
+        const q = 'UPDATE authprogress SET documents = TRUE WHERE StudentId = (?)'
+
+        const values = [
+            studentId
+        ];
+
+        db.query(q, [values], (err, data) => {
+            if (err) return res.send(err);
+            return res.json({
+                message: 'New student documents Information added and authprogress updated!',
+                studentId: studentId
+            });
+        })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -50,3 +73,6 @@ router.post('/submitdocuments/:studentId', upload.fields([
 });
 
 export default router;
+
+// if documntId is already present then update it not insert
+// also update authprogress

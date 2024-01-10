@@ -38,9 +38,9 @@ export default function StudentRegistration() {
     ChildIsIndianNational: null,
     ChildIsOutOfSchoolChild: null,
     MainstreamedDate: null,
+    Disability: null,
     // Add other form fields as needed
   });
-  
 
   const handleInputChange = (e) => {
     const { id, value, type } = e.target;
@@ -130,9 +130,10 @@ export default function StudentRegistration() {
                     id="MinorityGroup"
                     onChange={handleInputChange}
                     required
-                    
                   >
-                    <option value="" disabled selected>Select minority group</option>
+                    <option value="" disabled selected>
+                      Select minority group
+                    </option>
                     <option value="muslim">Muslim</option>
                     <option value="christian">Christian</option>
                     <option value="sikh">Sikh</option>
@@ -140,6 +141,48 @@ export default function StudentRegistration() {
                     <option value="parsi">Parsi</option>
                     <option value="jain">Jain</option>
                     <option value="notMinority">Not Minority</option>
+                    {/* Add more options as needed */}
+                  </select>
+                </div>
+                <div className="form-group col-auto mb-3">
+                  <label htmlFor="Disability">
+                    Disability:
+                    
+                  </label>
+                  <select
+                    className="form-select"
+                    id="Disability"
+                    onChange={handleInputChange}
+                    
+                  >
+                    <option value="" disabled selected>
+                      Select Disability
+                    </option>
+                    <option value="0">None</option>
+                    <option value="1">Blindness</option>
+                    <option value="2">Hearing Impairment</option>
+                    <option value="3">
+                      {" "}
+                      Multiple Disabilities including Deaf-blindness
+                    </option>
+                    <option value="4">Low-vision</option>
+                    <option value="5">Leprosy Cured Persons</option>
+                    <option value="6">Locomotor Disability</option>
+                    <option value="7">Dwarfism</option>
+                    <option value="8">Intellectual Disability</option>
+                    <option value="9">Mental Illness</option>
+                    <option value="10">Autism Spectrum Disorder</option>
+                    <option value="11">Cerebral Pals</option>
+                    <option value="12">Muscular Dystrophy</option>
+                    <option value="13">Chronic Neurological Conditions</option>
+                    <option value="14">Specific Learning Disabilities</option>
+                    <option value="15">Multiple Sclerosis</option>
+                    <option value="16">Speech and Language Disability</option>
+                    <option value="17">Thalassemia</option>
+                    <option value="18">Hemophilia</option>
+                    <option value="19">Sickle Cell Disease</option>
+                    <option value="20">Acid Attack Victims</option>
+                    <option value="21">Parkinsons disease</option>
                     {/* Add more options as needed */}
                   </select>
                 </div>

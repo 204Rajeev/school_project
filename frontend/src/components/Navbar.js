@@ -3,12 +3,22 @@ import { useAuth } from "../AuthContext";
 import { useHistory } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 function Navbar(props) {
   const { phoneNumber, logout } = useAuth();
   const history = useHistory();
+  // useEffect(() => {
+  //   // Perform the navigation after the component has rendered
+  //   if (!phoneNumber) {
+  //     history.push("/login");
+  //   }
+  // }, [phoneNumber, history]);
 
   const handleLogin = () => {
-    history.push("/login");
+    if (!phoneNumber) {
+          history.push("/login");
+        }
+    // history.push("/login");
   };
   return (
     <div>
