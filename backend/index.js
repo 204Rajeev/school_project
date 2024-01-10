@@ -8,6 +8,7 @@ import previousschoolRouter from './routes/previousschool.js';
 import documentedRouter from './routes/submitdocuments.js';
 import documentPreviewRouter from './routes/documentspreview.js';
 import submitFormRouter from './routes/submitform.js';
+import downloadFileRouter from './routes/downloadfile.js';
 
 
 
@@ -24,6 +25,7 @@ app.use('/previousschool', previousschoolRouter);
 app.use('/submitdocuments',documentedRouter);
 app.use('/documentspreview',documentPreviewRouter);
 app.use('/submitform',submitFormRouter);
+app.use('/downloadfile',downloadFileRouter);
 
 
 
