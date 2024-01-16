@@ -24,15 +24,10 @@ const getDocumentData = (variableName) => {
 };
 
 router.get('/TransferCertificate/:id', getDocumentData('TransferCertificate'));
-
 router.get('/Results/:id', getDocumentData('Results'));
-
 router.get('/AdharCard/:id', getDocumentData('AdharCard'));
-
 router.get('/PassportPhoto/:id', getDocumentData('PassportPhoto'));
-
 router.get('/Signature/:id', getDocumentData('Signature'));
-
 router.get('/Affidavit/:id', getDocumentData('Affidavit'));
 
 

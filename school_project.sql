@@ -58,6 +58,8 @@ CREATE TABLE studentidentity (
     MobileNumber VARCHAR(15) NOT NULL,
     AlternateMobileNumber VARCHAR(15),
     EmailId VARCHAR(255),
+    PANNo VARCHAR(11),
+	Class INT,
     -- CHECK (FatherName IS NOT NULL OR MotherName IS NOT NULL OR GuardianName IS NOT NULL),
     -- CHECK ((AadharNoMother IS NOT NULL OR AadharNoFather IS NOT NULL)),
     PRIMARY KEY(studentId),
@@ -94,6 +96,9 @@ CREATE TABLE previousschool(
     MotherName VARCHAR(255),
     DOBAsPerTC DATE,  /*YYYY-MM-DD*/
     NameAsPerTC VARCHAR(255),
+	PreviousSchoolName VARCHAR(255),
+	TCDate DATE,
+	UDISECode VARCHAR(15),
     PRIMARY KEY(StudentId),
     FOREIGN KEY (StudentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
 );
