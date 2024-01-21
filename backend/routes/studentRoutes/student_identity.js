@@ -1,9 +1,10 @@
 import express from 'express';
-import db from '../database/my_sql.js';
+import db from '../../database/my_sql.js';
 
 const router = express.Router();
 
 router.post('/:id', (req, res) => {
+    console.log('student identity');
     const StudentId = req.params.id;
     const q = `
         INSERT INTO studentidentity (
@@ -12,8 +13,8 @@ router.post('/:id', (req, res) => {
             AadharNo,
             DOBAsPerAadhar,
             Gender,
-            MotherName,
             FatherName,
+            MotherName,
             GuardianName,
             AadharNoMother,
             AadharNoFather,
@@ -24,14 +25,14 @@ router.post('/:id', (req, res) => {
             EmailId,
             PANNo,
             Class
-        ) VALUES (?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
             NameAsPerAadhar = VALUES(NameAsPerAadhar),
             AadharNo = VALUES(AadharNo),
             DOBAsPerAadhar = VALUES(DOBAsPerAadhar),
             Gender = VALUES(Gender),
-            MotherName = VALUES(MotherName),
             FatherName = VALUES(FatherName),
+            MotherName = VALUES(MotherName),
             GuardianName = VALUES(GuardianName),
             AadharNoMother = VALUES(AadharNoMother),
             AadharNoFather = VALUES(AadharNoFather),
@@ -48,8 +49,8 @@ router.post('/:id', (req, res) => {
         req.body.AadharNo,
         req.body.DOBAsPerAadhar,
         req.body.Gender,
-        req.body.MotherName,
         req.body.FatherName,
+        req.body.MotherName,
         req.body.GuardianName,
         req.body.AadharNoMother,
         req.body.AadharNoFather,

@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../database/my_sql.js';
+import db from '../../database/my_sql.js';
 import multer from 'multer';
 
 const router = express.Router();

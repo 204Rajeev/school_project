@@ -1,11 +1,6 @@
 CREATE DATABASE school;
 USE school;
 
-drop table authprogress;
-drop table studentidentity;
-drop table studentregistration;
-drop table previousschool;
-drop table documents;
 
 ALTER TABLE authprogress AUTO_INCREMENT = 1;
 
@@ -60,12 +55,9 @@ CREATE TABLE studentidentity (
     EmailId VARCHAR(255),
     PANNo VARCHAR(11),
 	Class INT,
-    -- CHECK (FatherName IS NOT NULL OR MotherName IS NOT NULL OR GuardianName IS NOT NULL),
-    -- CHECK ((AadharNoMother IS NOT NULL OR AadharNoFather IS NOT NULL)),
     PRIMARY KEY(studentId),
     FOREIGN KEY (StudentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
 );
-
 
 CREATE TABLE studentregistration(
 	StudentId INT,
@@ -113,4 +105,24 @@ CREATE TABLE documents(
     Affidavit LONGBLOB,
     PRIMARY KEY(DocumentId),
     FOREIGN KEY (DocumentId) REFERENCES authprogress(StudentId) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS notices (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  heading VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  date DATE NOT NULL
+);
+
+CREATE TABLE admins (
+  adminid INT PRIMARY KEY AUTO_INCREMENT,
+  MobileNumber VARCHAR(15) UNIQUE NOT NULL
+);
+
+CREATE TABLE Applications (
+    studentId INT PRIMARY KEY,
+    StudentName VARCHAR(255),
+    MobileNumber BIGINT, -- Change the data type to BIGINT for a large number
+    status INT DEFAULT 0 CHECK (status IN (0, 1, 2)),
+    class INT
 );

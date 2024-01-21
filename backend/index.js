@@ -1,14 +1,17 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv';
-import studentIdentityRouter from './routes/studentidentity.js'; 
-import studentRegistrationRouter from './routes/studentregistration.js';
-import authProgressRouter from './routes/authprogress.js';
-import previousschoolRouter from './routes/previousschool.js';
-import documentedRouter from './routes/submitdocuments.js';
-import documentPreviewRouter from './routes/documentspreview.js';
-import submitFormRouter from './routes/submitform.js';
-import downloadFileRouter from './routes/downloadfile.js';
+import studentIdentityRouter from './routes/studentRoutes/student_identity.js'; 
+import studentRegistrationRouter from './routes/studentRoutes/student_registration.js';
+import authProgressRouter from './routes/studentRoutes/auth_progress.js';
+import previousschoolRouter from './routes/studentRoutes/previous_school.js';
+import documentedRouter from './routes/studentRoutes/submit_documents.js';
+import documentPreviewRouter from './routes/studentRoutes/documents_preview.js';
+import submitFormRouter from './routes/studentRoutes/submit_form.js';
+import downloadFileRouter from './routes/studentRoutes/download_file.js';
+import checkAdminRouter from './routes/adminRoutes/check_admin.js';
+import rejectAppadminRouter from './routes/adminRoutes/aplications.js';
+import noticeRouter from './routes/adminRoutes/notices.js';
 
 
 
@@ -26,8 +29,9 @@ app.use('/submitdocuments',documentedRouter);
 app.use('/documentspreview',documentPreviewRouter);
 app.use('/submitform',submitFormRouter);
 app.use('/downloadfile',downloadFileRouter);
-
-
+app.use('/admin', rejectAppadminRouter);
+app.use('/admin', checkAdminRouter);
+app.use('/admin',noticeRouter);
 
 
 

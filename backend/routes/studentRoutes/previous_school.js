@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../database/my_sql.js';
+import db from '../../database/my_sql.js';
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ router.post('/:id', (req, res) => {
     const q = `
         INSERT INTO previousschool 
         (StudentId, FatherName, MotherName, DOBAsPerTC, NameAsPerTC, TCDate, UDISECode) 
-        VALUES (?) 
+        VALUES (?,?,?,?,?,?,?) 
         ON DUPLICATE KEY UPDATE 
             FatherName = VALUES(FatherName),
             MotherName = VALUES(MotherName),
