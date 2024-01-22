@@ -7,13 +7,14 @@ router.post('/:id', (req, res) => {
     const StudentId = req.params.id;
     const q = `
         INSERT INTO previousschool 
-        (StudentId, FatherName, MotherName, DOBAsPerTC, NameAsPerTC, TCDate, UDISECode) 
-        VALUES (?,?,?,?,?,?,?) 
+        (StudentId, FatherName, MotherName, DOBAsPerTC, NameAsPerTC, PreviousSchoolName, TCDate, UDISECode) 
+        VALUES (?,?,?,?,?,?,?,?) 
         ON DUPLICATE KEY UPDATE 
             FatherName = VALUES(FatherName),
             MotherName = VALUES(MotherName),
             DOBAsPerTC = VALUES(DOBAsPerTC),
             NameAsPerTC = VALUES(NameAsPerTC),
+            PreviousSchoolName=VALUES(PreviousSchoolName),
             TCDate = VALUES(TCDate),
             UDISECode = VALUES(UDISECode)
     `;
@@ -23,6 +24,7 @@ router.post('/:id', (req, res) => {
         req.body.MotherName,
         req.body.DOBAsPerTC,
         req.body.NameAsPerTC,
+        req.body.PreviousSchoolName,
         req.body.TCDate,
         req.body.UDISECode
     ];

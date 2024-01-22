@@ -78,4 +78,40 @@ router.get('/previewstudentidentity/:studentId', async (req, res) => {
     }
   });
 
+  router.get("/previewphoto/:studentId", (req, res) => {
+    const studentId = req.params.studentId;
+  
+    const query = "SELECT passportPhoto FROM documents WHERE documentId = ?";
+    db.query(query, [studentId], (error, results) => {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+      } else {
+        const fileData = results[0].passportPhoto;
+  
+        res.contentType("application/jpg");
+        res.send(fileData);
+      }
+    });
+  });
+  
+  router.get("/previewsignature/:studentId", (req, res) => {
+    const studentId = req.params.studentId;
+  
+    const query = "SELECT signature FROM documents WHERE documentId = ?";
+    db.query(query, [studentId], (error, results) => {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+      } else {
+        const fileData = results[0].signature;
+  
+        res.contentType("application/jpg");
+        res.send(fileData);
+      }
+    });
+  });
+  
+  
+
 export default router;

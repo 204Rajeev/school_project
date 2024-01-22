@@ -10,7 +10,7 @@ import documentPreviewRouter from './routes/studentRoutes/documents_preview.js';
 import submitFormRouter from './routes/studentRoutes/submit_form.js';
 import downloadFileRouter from './routes/studentRoutes/download_file.js';
 import checkAdminRouter from './routes/adminRoutes/check_admin.js';
-import rejectAppadminRouter from './routes/adminRoutes/aplications.js';
+import rejectAppAdminRouter from './routes/adminRoutes/applications.js';
 import noticeRouter from './routes/adminRoutes/notices.js';
 
 
@@ -29,7 +29,7 @@ app.use('/submitdocuments',documentedRouter);
 app.use('/documentspreview',documentPreviewRouter);
 app.use('/submitform',submitFormRouter);
 app.use('/downloadfile',downloadFileRouter);
-app.use('/admin', rejectAppadminRouter);
+app.use('/admin', rejectAppAdminRouter);
 app.use('/admin', checkAdminRouter);
 app.use('/admin',noticeRouter);
 
